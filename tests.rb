@@ -69,16 +69,53 @@ class ApplicationTest < Minitest::Test
     refute f.save
   end
 
+#validation in user
   def test_user_has_first_name
     assert User.create(first_name: "Andy")
     g = User.new()
     refute g.save
   end
 
+#validation in user
   def test_user_has_last_name
     assert User.create(last_name: "Warhol")
     h = User.new()
     refute h.save
+  end
+
+  #validation in user
+  def test_user_has_email
+    assert User.create(email: "fake_a@gmail.com")
+    i = User.new()
+    refute i.save
+  end
+
+  #validation in term
+  def test_term_has_name
+    assert Term.create(name: "Fall 2015")
+    j = Term.new()
+    refute j.save
+  end
+
+  #validation in term
+  def test_term_has_start_date
+    assert Term.create(starts_on: Date.today)
+    k = Term.new()
+    refute k.save
+  end
+
+  #validation in term
+  def test_term_has_end_date
+    assert Term.create(ends_on: Date.today)
+    l = Term.new()
+    refute l.save
+  end
+
+  #validation in term
+  def test_term_has_school_id
+    assert Term.create(school_id: 01)
+    m = Term.new()
+    refute m.save
   end
 
 end
