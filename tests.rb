@@ -32,13 +32,6 @@ class ApplicationTest < Minitest::Test
     r = Reading.new()
     refute r.save
   end
-  # def test_create_new_school
-  # assert School.create(name: "Anthony High School")
-  # assert_raises(ArgumentError) do
-  #   School.create(1, 2)
-  #   end
-  # end
-
 
   def test_truth
     assert true
