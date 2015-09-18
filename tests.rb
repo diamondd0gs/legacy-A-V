@@ -90,6 +90,24 @@ class ApplicationTest < Minitest::Test
     refute i.save
   end
 
+  #validation in user
+  def test_user_photo_uses_http
+    assert User.create(photo_url: "http://www.photobucket.com")
+    n = User.new(photo_url: "www.photobucket.com")
+    refute n.save
+  end
+
+#validation in user
+  def test_user_email_is_appropriate
+    assert User.create(email: "fake_c@gmail.com")
+    o = User.new(email: "fakeagmail.com")
+    q = User.new(email: "fake@@gmail.com")
+    r = User.new(email: "fake@gmail")
+    refute o.save
+    refute q.save
+    refute r.save
+  end
+
   #validation in term
   def test_term_has_name
     assert Term.create(name: "Fall 2015")
