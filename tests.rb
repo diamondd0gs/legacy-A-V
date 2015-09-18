@@ -28,6 +28,7 @@ class ApplicationTest < Minitest::Test
     assert true
   end
 
+#associations in lesson and reading
   def test_lessons_and_readings_dependent
     before = Reading.count
     new_reading = Reading.create()
@@ -37,7 +38,19 @@ class ApplicationTest < Minitest::Test
     assert 1, Reading.count
     tuesday_lesson.destroy
     assert_equal 0, Reading.count
-   end
+  end
+
+#associations in lesson and course
+  def test_lessons_and_courses_dependent
+    before = Lesson.count
+    new_lesson = Lesson.create()
+    new_course = Course.create()
+    new_course.lessons << new_lesson
+    assert new_course.reload.lessons.include?(new_lesson)
+    assert 1, Lesson.count
+    new_course.destroy
+    assert_equal 0, Lesson.count
+  end
 
 #validation in school
   def test_schools_must_have_names
