@@ -77,6 +77,17 @@ class ApplicationTest < Minitest::Test
     refute b.save
   end
 
+  def test_course_code_starts_3_letters_ends_3_numbers
+    a = Course.new(name: "Intro to Mathematics", course_code: "MAT101")
+    b = Course.new(name: "another course", course_code: "mat101")
+    c = Course.new(name: "yet another course", course_code: "MATH101")
+
+    assert a.save
+    assert b.save
+    refute c.save
+  end
+
+
 
 
 

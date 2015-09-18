@@ -7,6 +7,8 @@ ActiveRecord::Base.establish_connection(
 class Term < ActiveRecord::Base
   has_many :course
 
+validates :id, uniqueness: true
+validates :name, uniqueness: true
 
   default_scope { order('ends_on DESC') }
 
