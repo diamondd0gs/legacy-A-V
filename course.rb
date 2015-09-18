@@ -1,4 +1,17 @@
+ActiveRecord::Base.establish_connection(
+  adapter:  'sqlite3',
+  database: 'development.sqlite3'
+)
+
+
 class Course < ActiveRecord::Base
+
+  belongs_to :term
+
+
+  validates :name, presence: true
+  validates :course_code, presence: true
+  validates :term_id, uniqueness: true
 
   default_scope { order("courses.term_id DESC, courses.course_code, courses.id DESC") }
 

@@ -1,12 +1,14 @@
+ActiveRecord::Base.establish_connection(
+  adapter:  'sqlite3',
+  database: 'development.sqlite3'
+)
+
 class Reading < ActiveRecord::Base
 
-  ActiveRecord::Base.establish_connection(
-    adapter:  'sqlite3',
-    database: 'development.sqlite3'
-  )
 
-
-validates :order_number, presence: true
+  validates :order_number, presence: true
+  validates :lesson_id, presence: true
+  validates :url, presence: true
 
   default_scope { order('order_number') }
 

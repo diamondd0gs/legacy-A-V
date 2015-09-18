@@ -1,5 +1,12 @@
+ActiveRecord::Base.establish_connection(
+  adapter:  'sqlite3',
+  database: 'development.sqlite3'
+)
+
+
 class Term < ActiveRecord::Base
-  belongs_to :schools
+  has_many :course
+
 
   default_scope { order('ends_on DESC') }
 
