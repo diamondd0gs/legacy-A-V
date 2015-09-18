@@ -1,8 +1,6 @@
 # Basic test requires
 require 'minitest/autorun'
 require 'minitest/pride'
-require './school.rb'
-require './assignment.rb'
 
 # Include both the migration and the app itself
 require './migration'
@@ -30,26 +28,73 @@ class ApplicationTest < Minitest::Test
 
 #associations in lesson and reading
   def test_lessons_and_readings_dependent
-    before = Reading.count
     new_reading = Reading.create()
     tuesday_lesson = Lesson.create()
     tuesday_lesson.readings << new_reading
     assert tuesday_lesson.reload.readings.include?(new_reading)
-    assert 1, Reading.count
+  end
+
+  def test_lessons_destroyed_with_readings
+    new_reading = Reading.create()
+    tuesday_lesson = Lesson.create()
+    before = Lesson.count
+    assert 1, Lesson.count
     tuesday_lesson.destroy
-    assert_equal 0, Reading.count
+    assert_equal before - 1, Lesson.count
   end
 
 #associations in lesson and course
   def test_lessons_and_courses_dependent
-    before = Lesson.count
     new_lesson = Lesson.create()
     new_course = Course.create()
     new_course.lessons << new_lesson
     assert new_course.reload.lessons.include?(new_lesson)
+  end
+
+#associations in lesson and course
+  def test_course_destroy_also_destroys_lessons
+    new_lesson = Lesson.create()
+    new_course = Course.create()
+    new_course.lessons << new_lesson
+    before = Lesson.count
     assert 1, Lesson.count
     new_course.destroy
-    assert_equal 0, Lesson.count
+    assert_equal before - 1, Lesson.count
+  end
+
+  def test_cannot_destroy_courses_with_students
+    new_course = Course.create()
+    new_student = CourseStudent.create()
+    new_course.course_students << new_student
+    assert new_course.reload.course_students.include?(new_student)
+    before = Course.count
+    new_course.destroy
+    refute_equal Course.count, before-1
+  end
+
+  def test_courses_have_readings_through_lessons
+    new_course = Course.create()
+    new_lesson = Lesson.create()
+    new_reading = Reading.create()
+    new_lesson.readings << new_reading
+    new_course.lessons << new_lesson
+    assert_equal [new_reading], new_course.readings
+  end
+
+#associations in course_instructor and course
+  def test_course_instructors_with_courses
+    new_course = Course.create()
+    instructor = CourseInstructor.create()
+    # student = CourseStudent.create()
+    new_course.course_instructors << instructor
+    assert new_course.reload.course_instructors.include?(instructor)
+  end
+
+  def test_lessons_with_in_class_assignments
+    new_lesson = Lesson.create(name: "new lesson")
+    new_assignment = Assignment.create(name: "new assignment")
+    new_assignment.lessons << new_lesson
+    assert_equal [new_lesson], new_assignment.lessons
   end
 
 #validation in school
@@ -119,7 +164,9 @@ class ApplicationTest < Minitest::Test
   def test_user_photo_uses_http
     assert User.create(photo_url: "http://www.photobucket.com")
     n = User.new(photo_url: "www.photobucket.com")
+    o = User.new(photo_url: "www.photobucket.com.http://")
     refute n.save
+    refute o.save
   end
 
 #validation in user

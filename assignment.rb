@@ -1,4 +1,5 @@
 class Assignment < ActiveRecord::Base
+  has_many :lessons, foreign_key: :in_class_assignment_id
 
   validates :course_id, presence: true
   validates :name, presence: true
