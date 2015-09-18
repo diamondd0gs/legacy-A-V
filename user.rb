@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :email, presence: true
+  validates :email, uniqueness: true
   validates :email, format: { with: /(http:\/\/)|(https:\/\/)/, on: :create}
   validates :email, format: { with: /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i, on: :create}
 

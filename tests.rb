@@ -28,6 +28,17 @@ class ApplicationTest < Minitest::Test
     assert true
   end
 
+  def test_lessons_and_readings_dependent
+    before = Reading.count
+    new_reading = Reading.create()
+    tuesday_lesson = Lesson.create()
+    tuesday_lesson.readings << new_reading
+    assert tuesday_lesson.reload.readings.include?(new_reading)
+    assert 1, Reading.count
+    tuesday_lesson.destroy
+    assert_equal 0, Reading.count
+   end
+
 #validation in school
   def test_schools_must_have_names
     assert School.create(name: "Grover C. Fields")
@@ -37,6 +48,7 @@ class ApplicationTest < Minitest::Test
 
 #validation in assignment
   def test_assignments_have_a_course_id
+    assert Assignment.create(course_id: 12)
     a = Assignment.new()
     refute a.save
   end
@@ -57,14 +69,14 @@ class ApplicationTest < Minitest::Test
 
 #validation in assignment
   def test_no_duplicate_assignments
-    assert Assignment.create(name: "Friday Homework")
+    Assignment.create(name: "Friday Homework")
     e = Assignment.new(name: "Friday Homework")
     refute e.save
   end
 
 #validation in user
   def test_no_duplicate_emails
-    assert User.create(email: "fake@gmail.com")
+    User.create(email: "fake@gmail.com")
     f = User.new(email: "fake@gmail.com")
     refute f.save
   end
