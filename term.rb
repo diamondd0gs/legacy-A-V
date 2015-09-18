@@ -5,6 +5,7 @@ ActiveRecord::Base.establish_connection(
 
 
 class Term < ActiveRecord::Base
+  belongs_to :school
   has_many :course
 
 validates :id, uniqueness: true

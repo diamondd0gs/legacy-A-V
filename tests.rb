@@ -31,7 +31,7 @@ class ApplicationTest < Minitest::Test
   end
 
   def test_lessons_must_have_names
-    a = School.new(name: "Anthony High School")
+    a = Lesson.new(name: "Mathematics")
     s = School.new()
     assert a.save
     refute s.save
@@ -88,7 +88,13 @@ class ApplicationTest < Minitest::Test
   end
 
 
-
+  def test_schools_and_terms_are_associated_correctly
+    a = School.create(name: "Anthony High School")
+    c = Term.create(name: "fall")
+    a.terms << c
+    assert a.reload.terms.include?(c)
+    assert_equal a, c.reload.school
+  end
 
 
 

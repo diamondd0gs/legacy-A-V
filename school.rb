@@ -5,7 +5,7 @@ class School < ActiveRecord::Base
     database: 'development.sqlite3'
   )
 
-
+has_many :terms
 validates :name, presence: true
   default_scope { order('name') }
 
