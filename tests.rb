@@ -69,12 +69,12 @@ class ApplicationTest < Minitest::Test
   def test_courses_must_have_unique_course_code_per_term
     a = Course.create(name: "Mathematics", course_code: "mat101")
     c = Term.create(name: "fall")
-    a.term = c
+    a.term_id = c
     assert a.save
 
-    b = Course.new(name: "Mathematics", course_code: "mat101")
-    b.term = c
-    refute b.save
+   b = Course.new(name: "Mathematics", course_code: "mat101")
+   b.term_id = c
+   refute b.save
   end
 
   def test_course_code_starts_3_letters_ends_3_numbers
@@ -95,6 +95,16 @@ class ApplicationTest < Minitest::Test
     assert a.reload.terms.include?(c)
     assert_equal a, c.reload.school
   end
+
+  def test_courses_and_terms_are_associated_correctly
+    a = Course.create(name: "Intro to Mathematics", course_code: "MAT101")
+    assert a.save
+    c = Term.create(name: "fall")
+    assert c.save
+    assert a.reload.term_id = c.id
+  end
+
+
 
 
 

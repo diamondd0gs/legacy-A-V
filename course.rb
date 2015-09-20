@@ -6,7 +6,7 @@ ActiveRecord::Base.establish_connection(
 
 class Course < ActiveRecord::Base
 
-  belongs_to :term
+  belongs_to :terms
 
 
   validates :name, presence: true
