@@ -1,7 +1,18 @@
+ActiveRecord::Base.establish_connection(
+  adapter:  'sqlite3',
+  database: 'development.sqlite3'
+)
+
 class Assignment < ActiveRecord::Base
 
   belongs_to :courses, dependent: :destroy
   has_many :pre_class_assignments
+  has_many :lessons, foreign_key: :in_class_assignment_id
+
+  validates :course_id, presence: true
+  validates :name, presence: true
+  validates :name, uniqueness: true
+  validates :percent_of_grade, presence: true
 
   scope :active_for_students, -> { where("active_at <= ? AND due_at >= ? AND students_can_submit = ?", Time.now, Time.now, true) }
 

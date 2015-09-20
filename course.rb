@@ -14,6 +14,10 @@ class Course < ActiveRecord::Base
   validates :name, presence: true
   validates :course_code, presence: true, :uniqueness => {scope: :term_id}
   validates :course_code, format:{ with: /\A[a-zA-Z][a-zA-Z][a-zA-z]\d\d\d\z/, on: :create}
+  has_many :course_students, dependent: :restrict_with_error
+  has_many :course_instructors
+  has_many :lessons, dependent: :destroy
+  has_many :readings, through: :lessons
 
   default_scope { order("courses.term_id DESC, courses.course_code, courses.id DESC") }
 

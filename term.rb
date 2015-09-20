@@ -1,3 +1,4 @@
+
 ActiveRecord::Base.establish_connection(
   adapter:  'sqlite3',
   database: 'development.sqlite3'
@@ -8,8 +9,12 @@ class Term < ActiveRecord::Base
   belongs_to :school
   has_many :courses, dependent: :restrict_with_error
 
-validates :id, uniqueness: true
-validates :name, uniqueness: true
+  validates :id, uniqueness: true
+  validates :name, uniqueness: true
+  validates :name, presence: true
+  validates :starts_on, presence: true
+  validates :ends_on, presence: true
+  validates :school_id, presence: true
 
   default_scope { order('ends_on DESC') }
 
@@ -19,6 +24,8 @@ validates :name, uniqueness: true
     school ? school.name : "None"
   end
 
+
   def term()
   end
+
 end

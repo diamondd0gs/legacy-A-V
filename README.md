@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Legacy Associations and Validations
 
 ## Description
@@ -115,3 +116,6 @@ Then, together:
 * Associate Lessons with their `child_lessons` (and vice-versa).  Sort the `child_lessons` by `id`.
 
 (And, of course, tests tests tests).
+=======
+# legacy-A-V
+>>>>>>> 4eb0c086347630b3283a8076e98141512d1734c3

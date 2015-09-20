@@ -4,10 +4,12 @@ ActiveRecord::Base.establish_connection(
 )
 
 class Lesson < ActiveRecord::Base
+  has_many :readings, dependent: :destroy
+  belongs_to :courses
+  belongs_to :assignment
 
 
   validates :name, presence: true
-
 
   delegate :code_and_name, to: :course, prefix: true
 
