@@ -98,10 +98,16 @@ class ApplicationTest < Minitest::Test
 
   def test_courses_and_terms_are_associated_correctly
     a = Course.create(name: "Intro to Mathematics", course_code: "MAT101")
-    assert a.save
     c = Term.create(name: "fall")
+    assert a.term_id = c.id
+  end
+
+  def test_courses_and_course_students_are_associated_correctly
+    a = Course.create(name: "Intro to Mathematics", course_code: "MAT101")
+    c = CourseStudent.create(student_id: "1")
+    assert a.save
     assert c.save
-    assert a.reload.term_id = c.id
+    assert c.course_id = a.id
   end
 
 

@@ -6,7 +6,7 @@ ActiveRecord::Base.establish_connection(
 
 class Term < ActiveRecord::Base
   belongs_to :school
-  has_many :courses, dependent: :destroy
+  has_many :courses, dependent: :restrict_with_error
 
 validates :id, uniqueness: true
 validates :name, uniqueness: true
