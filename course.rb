@@ -8,7 +8,7 @@ class Course < ActiveRecord::Base
 
   belongs_to :terms
   has_many :course_students, dependent: :restrict_with_error
-  # has_many :assignments
+  has_many :assignments
 
 
   validates :name, presence: true
