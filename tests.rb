@@ -118,8 +118,4 @@ def test_courses_and_assignments_are_associated_correctly
 end
 
 
-
-
-
-
 end
